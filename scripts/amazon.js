@@ -1,3 +1,4 @@
+import {cart} from "../data/cart.js";
 let productHtml = ``;
 products.forEach(product => {
     productHtml += `
@@ -24,7 +25,7 @@ $${(product.priceCents / 100).toFixed(2)}
 </div>
 
 <div class="product-quantity-container">
-<select>
+<select class="js-quantity-selector-${product.id}">
 <option selected value="1">1</option>
 <option value="2">2</option>
 <option value="3">3</option>
@@ -40,7 +41,7 @@ $${(product.priceCents / 100).toFixed(2)}
 
 <div class="product-spacer"></div>
 
-<div class="added-to-cart">
+<div class="added-to-cart js-added-${product.id}">
 <img src="images/icons/checkmark.png">
 Added
 </div>
@@ -56,11 +57,13 @@ Add to Cart
 
 document.querySelector(".js_product_grids").innerHTML = productHtml;
 document.querySelectorAll(".js_add_to_cart").forEach(button => {
+  let timeoutId;
     button.addEventListener("click", () => {
-        const productId = button.dataset.productId;
+        const { productId } = button.dataset;
+
         let matchingItem;
         cart.forEach(item => {
-            if (productName === item.productName) {
+            if (productId === item.productId) {
                 matchingItem = item;
             }
         });
@@ -68,11 +71,24 @@ document.querySelectorAll(".js_add_to_cart").forEach(button => {
             matchingItem.quantity += 1;
         } else {
             cart.push({
-                productName,
+                productId,
                 quantity: 1
             });
         }
+        let cartQuantity = 0;
+        let quantitySelector = document.querySelector(
+            `.js-quantity-selector-${productId}`
+        ).value;
+        cart.forEach(item => {
+            cartQuantity += item.quantity + Number(quantitySelector - 1);
+        });
 
-        console.log(cart);
+        document.querySelector(".js-cart-quantity").innerText = cartQuantity;
+        const added = document.querySelector(`.js-added-${productId}`);
+        added.classList.add("added");
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            added.classList.remove("added"); // Will now fade out
+        }, 2000);
     });
 });
