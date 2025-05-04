@@ -1,10 +1,11 @@
 import { cart, addToCart } from "../data/cart.js";
 import { products } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
 let cartSummaryHTML = "";
 cart.forEach(cartItem => {
     const productId = cartItem.productId;
     let matchingItem;
-    
+
     products.forEach(product => {
         if (product.id === productId) {
             matchingItem = product;
@@ -25,7 +26,7 @@ src="${matchingItem.image}">
 Black and Gray Athletic Cotton Socks - 6 Pairs
 </div>
 <div class="product-price">
-$${matchingItem.priceCents}
+$${formatCurrency(matchingItem.priceCents)}
 </div>
 <div class="product-quantity">
 <span>
@@ -47,7 +48,7 @@ Choose a delivery option:
 <div class="delivery-option">
 <input type="radio" checked
 class="delivery-option-input"
-name="delivery-option-1">
+name="delivery-option-${matchingItem.id}">
 <div>
 <div class="delivery-option-date">
 Tuesday, June 21
@@ -60,7 +61,7 @@ FREE Shipping
 <div class="delivery-option">
 <input type="radio"
 class="delivery-option-input"
-name="delivery-option-1">
+name="delivery-option-${matchingItem.id}">
 <div>
 <div class="delivery-option-date">
 Wednesday, June 15
@@ -73,7 +74,7 @@ $4.99 - Shipping
 <div class="delivery-option">
 <input type="radio"
 class="delivery-option-input"
-name="delivery-option-1">
+name="delivery-option-${matchingItem.id}">
 <div>
 <div class="delivery-option-date">
 Monday, June 13
@@ -86,8 +87,5 @@ $9.99 - Shipping
 </div>
 </div>
 </div>`;
-    
-    
-
 });
 document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
