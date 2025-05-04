@@ -1,4 +1,5 @@
-import {cart} from "../data/cart.js";
+import { cart, addToCart } from "../data/cart.js";
+import { products } from "../data/products.js";
 let productHtml = ``;
 products.forEach(product => {
     productHtml += `
@@ -54,41 +55,34 @@ Add to Cart
 </div>
   `;
 });
-
 document.querySelector(".js_product_grids").innerHTML = productHtml;
+
+
+function updateCartQuantity(productId) {
+    let cartQuantity = 0;
+    let quantitySelector = document.querySelector(
+        `.js-quantity-selector-${productId}`
+    ).value;
+    cart.forEach(cartItem => {
+        cartQuantity += cartItem.quantity + Number(quantitySelector - 1);
+    });
+
+    document.querySelector(".js-cart-quantity").innerText = cartQuantity;
+}
+
+
 document.querySelectorAll(".js_add_to_cart").forEach(button => {
-  let timeoutId;
+    let timeoutId;
     button.addEventListener("click", () => {
         const { productId } = button.dataset;
-
-        let matchingItem;
-        cart.forEach(item => {
-            if (productId === item.productId) {
-                matchingItem = item;
-            }
-        });
-        if (matchingItem) {
-            matchingItem.quantity += 1;
-        } else {
-            cart.push({
-                productId,
-                quantity: 1
-            });
-        }
-        let cartQuantity = 0;
-        let quantitySelector = document.querySelector(
-            `.js-quantity-selector-${productId}`
-        ).value;
-        cart.forEach(item => {
-            cartQuantity += item.quantity + Number(quantitySelector - 1);
-        });
-
-        document.querySelector(".js-cart-quantity").innerText = cartQuantity;
+        addToCart(productId);
+        updateCartQuantity(productId);
+        
         const added = document.querySelector(`.js-added-${productId}`);
-        added.classList.add("added");
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            added.classList.remove("added"); // Will now fade out
-        }, 2000);
+    added.classList.add("added");
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+        added.classList.remove("added");
+    }, 2000);
     });
 });
