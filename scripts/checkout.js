@@ -2,7 +2,8 @@ import {
     cart,
     addToCart,
     removeFromCart,
-    calculateCartQuantity
+    calculateCartQuantity,
+    updateQuantity
 } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
@@ -35,13 +36,17 @@ $${formatCurrency(matchingItem.priceCents)}
 </div>
 <div class="product-quantity">
 <span>
-Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+Quantity: <span class="quantity-label js-quantity-label-${matchingItem.id}">${cartItem.quantity}</span>
 </span>
-<span class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${
+<span class="update-quantity-link link-primary js-update-link" data-product-id="${
         matchingItem.id
     }">
 Update
 </span>
+<input class="quantity-input js-input-${matchingItem.id}">
+<span class="save-quantity-link link-primary js-save" data-product-id="${
+        matchingItem.id
+    }">Save</span>
 <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${
         matchingItem.id
     }">
@@ -98,9 +103,33 @@ $9.99 - Shipping
 </div>`;
 });
 document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
-document.querySelectorAll(".js-update--link").forEach(link => {
+document.querySelectorAll(".js-update-link").forEach(link => {
     link.addEventListener("click", () => {
         const productId = link.dataset.productId;
+        console.log(productId);
+        const container = document.querySelector(
+            `.js-cart-item-container-${productId}`
+        );
+        container.classList.add("is-editing-quantity");
+    });
+});
+document.querySelectorAll(".save-quantity-link").forEach(link => {
+    link.addEventListener("click", () => {
+        const productId = link.dataset.productId;
+        const container = document.querySelector(
+            `.js-cart-item-container-${productId}`
+        );
+        container.classList.remove("is-editing-quantity");
+        let newQuantity = document.querySelector(
+            `.js-input-${productId}`
+        ).value;
+        newQuantity = Number(newQuantity);
+        document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
+            updateQuantity(productId, newQuantity);
+
+        updateQuantity(productId, newQuantity);
+
+        updateCartQuantity();
     });
 });
 document.querySelectorAll(".js-delete-link").forEach(link => {
