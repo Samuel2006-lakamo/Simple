@@ -6,29 +6,23 @@ import {
     updateDeliveryOption,
     updateQuantity
 } from "../../data/cart.js";
-import { products } from "../../data/products.js";
+import { products, getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import dayJs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
-import { deliveryOptions } from "../../data/deliveryOptions.js";
-
+import {
+    deliveryOptions,
+    getDeliveryOption
+} from "../../data/deliveryOptions.js";
+import { renderPaymentSummary } from "./paymentsummary.js";
 export function renderOrderSummary() {
     let cartSummaryHTML = "";
     cart.forEach(cartItem => {
         const productId = cartItem.productId;
-        let matchingItem;
+        let matchingItem = getProduct(productId);
 
-        products.forEach(product => {
-            if (product.id === productId) {
-                matchingItem = product;
-            }
-        });
         let deliveryOptionId = cartItem.deliveryId;
-        let deliveryOption;
-        deliveryOptions.forEach(option => {
-            if (option.id === deliveryOptionId) {
-                deliveryOption = option;
-            }
-        });
+        let deliveryOption = getDeliveryOption(deliveryOptionId);
+
         const today = dayJs();
         const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
         const dateString = deliveryDate.format("dddd, MMMM D ");
@@ -148,6 +142,7 @@ ${priceString}
             updateQuantity(productId, newQuantity);
 
             updateCartQuantity();
+            renderPaymentSummary();
         });
     });
     document.querySelectorAll(".js-delete-link").forEach(link => {
@@ -159,6 +154,7 @@ ${priceString}
             );
             container.remove();
             updateCartQuantity();
+            renderPaymentSummary();
             // document.querySelector(
             //         ".js-checkout-items"
             //     ).innerText = `${showCheckout()} items`;
@@ -182,6 +178,7 @@ ${priceString}
             const { productId, deliveryOptionId } = element.dataset;
             updateDeliveryOption(productId, deliveryOptionId);
             renderOrderSummary();
+            renderPaymentSummary();
         });
     });
 }
