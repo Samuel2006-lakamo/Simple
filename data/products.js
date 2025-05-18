@@ -685,7 +685,7 @@ export const products = [
 ].map(productDetails => {
   return new Products(productDetails);
 });
-console.log(products);
+
 
 export function getProduct(productId){
   let matchingItem;

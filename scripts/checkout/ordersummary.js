@@ -19,10 +19,7 @@ export function renderOrderSummary() {
     cart.forEach(cartItem => {
         const productId = cartItem.productId;
         let matchingItem = getProduct(productId);
-if (!matchingItem) {
-  console.error("Product not found for ID:", productId);
-  return; // Skip this cart item
-}
+
         let deliveryOptionId = cartItem.deliveryId;
         let deliveryOption = getDeliveryOption(deliveryOptionId);
 
@@ -120,7 +117,7 @@ ${priceString}
     document.querySelectorAll(".js-update-link").forEach(link => {
         link.addEventListener("click", () => {
             const productId = link.dataset.productId;
-            console.log(productId);
+            
             const container = document.querySelector(
                 `.js-cart-item-container-${productId}`
             );
