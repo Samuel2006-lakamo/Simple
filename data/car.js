@@ -13,25 +13,23 @@ class Car {
             console.log("car is moving can't open truck");
         } else {
             this.isTruckOpen = true;
-            console.log("moving");
+            console.log("open");
         }
     }
     closeTruck() {
         this.isTruckOpen = false;
     }
     go() {
-      if(this.isTruckOpen === true){
-        return;
-      }
-      else{
-        if (this.speed >= 20) {
-            console.log("maximum speed");
+        if (this.isTruckOpen === true) {
             return;
         } else {
-            this.speed += 5;
+            if (this.speed >= 200) {
+                console.log("maximum speed");
+                return;
+            } else {
+                this.speed += 5;
+            }
         }
-      }
-        
     }
     brake() {
         if (this.speed === 0) {
@@ -48,11 +46,38 @@ class Car {
 const car = new Car("Toyata", "corola");
 const car2 = new Car("Tesla", " model 3");
 
-
 car2.brake();
 car.go();
+car2.go();
+car2.brake();
 car.openTruck();
 car2.openTruck();
 car.displayInfo();
 car2.displayInfo();
 console.log(car, car2);
+
+class RaceCar extends Car {
+    accleration = 20;
+    // constructor(){
+    //       super(brand,model);
+    //     }
+    go() {
+        if (this.speed >= 300) {
+            console.log("maximum speed");
+            return;
+        } else {
+            this.speed += this.accleration;
+        }
+    }
+    displayInfo() {
+        this.speed;
+        console.log(
+            `${this.brand} ${this.model}, accleration:${this.speed} km/h`
+        );
+    }
+}
+const raceCar = new RaceCar("raceCar", "model 4");
+raceCar.go();
+raceCar.go();
+raceCar.displayInfo();
+console.log(raceCar);
