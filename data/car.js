@@ -72,8 +72,14 @@ class RaceCar extends Car {
     displayInfo() {
         this.speed;
         console.log(
-            `${this.brand} ${this.model}, accleration:${this.speed} km/h`
+            `${this.brand} ${this.model}, speed:${this.speed} km/h`
         );
+    }
+    closeTruck(){
+      return;
+    }
+    openTruck(){
+      return;
     }
 }
 const raceCar = new RaceCar("raceCar", "model 4");
