@@ -1,11 +1,11 @@
 class Car {
-    brand;
-    model;
+    #brand;
+    #model;
     speed = 0;
     isTruckOpen = false;
     constructor(brand, model) {
-        this.brand = brand;
-        this.model = model;
+        this.#brand = brand;
+        this.#model = model;
     }
     openTruck() {
         if (this.speed > 0) {
@@ -40,7 +40,7 @@ class Car {
     }
     displayInfo() {
         this.speed;
-        console.log(`${this.brand} ${this.model}, speed:${this.speed} km/h`);
+        console.log(`${this.#brand} ${this.#model}, speed:${this.speed} km/h`);
     }
 }
 const car = new Car("Toyata", "corola");
@@ -70,19 +70,18 @@ class RaceCar extends Car {
         }
     }
     displayInfo() {
+      
         this.speed;
-        console.log(
-            `${this.brand} ${this.model}, speed:${this.speed} km/h`
-        );
+        console.log(`${this.brand}, ${this.model}, speed:${this.speed} km/h`);
     }
-    closeTruck(){
-      return;
+    closeTruck() {
+        return;
     }
-    openTruck(){
-      return;
+    openTruck() {
+        return;
     }
 }
-const raceCar = new RaceCar("raceCar", "model 4");
+const raceCar = new RaceCar("Mclaren", "F1");
 raceCar.go();
 raceCar.go();
 raceCar.displayInfo();
