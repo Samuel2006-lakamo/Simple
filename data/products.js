@@ -45,7 +45,7 @@ class Appliances extends Products {
         this.warrantyLinks = productDetails.warrantyLinks;
     }
     extraInfoHTML() {
-        return `<a href="${this.instructionLinks}" target="_blank">Instruction</a></br><a href="${warrantyLinks}" target="_blank">Warranty</a>`;
+        return `<a href="${this.instructionLinks}" target="_blank">Instruction</a></br><a href="${this.warrantyLinks}" target="_blank">Warranty</a>`;
     }
 }
 

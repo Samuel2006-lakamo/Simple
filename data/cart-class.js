@@ -1,4 +1,4 @@
-class Cart {
+export class Cart {
     cartItem;
     #localStorageKey;
     constructor(localStorageKey) {
@@ -94,19 +94,8 @@ class Cart {
 
         this.saveToStorage();
     }
+    getItem(){
+      return this.cartItem;
+    }
 }
-const cart = new Cart("cart-oop");
-const businessCart = new Cart("cart-business");
-
-console.log(cart);
-console.log(businessCart);
-console.log(cart instanceof Cart);
-
-// function Cart(localStorageKey) {
-//     const cart = {
-//         cartItem: undefined;
-//
-//
-//     return cart;
-// }
-//
+ export let cart = new Cart("cart-opp");
