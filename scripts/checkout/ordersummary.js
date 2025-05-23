@@ -8,7 +8,7 @@
 // } from "../../data/cart.js";
 import { cart } from "../../data/cart-class.js";
 // import { cart} from "../../data/cart-class.js";
-import { products, getProduct } from "../../data/products.js";
+import { products, getProduct,loadProducts } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import dayJs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import {
@@ -16,14 +16,12 @@ import {
     getDeliveryOption
 } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentsummary.js";
+
 export function renderOrderSummary() {
-    
-    console.log(cart.getItem());
     let cartSummaryHTML = "";
     cart.getItem().forEach(cartItem => {
         const productId = cartItem.productId;
         let matchingItem = getProduct(productId);
-
         let deliveryOptionId = cartItem.deliveryId;
         let deliveryOption = getDeliveryOption(deliveryOptionId);
 
@@ -145,7 +143,7 @@ ${priceString}
 
             cart.updateQuantity(productId, newQuantity);
 
-        updateCartQuantity();
+            updateCartQuantity();
             renderPaymentSummary();
         });
     });
