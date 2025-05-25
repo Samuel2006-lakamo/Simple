@@ -184,4 +184,3 @@ ${priceString}
         });
     });
 }
-renderOrderSummary();
