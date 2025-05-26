@@ -49,22 +49,28 @@ class Appliances extends Products {
     }
 }
 export let products = [];
-/*function loadProductFetch() {
-   const promise = fetch("https://supersimplebackend.dev/products").then((response) => {
-     return response.json();
-    }).then((productItems) => {
-      products = productItems.map(productDetails => {
-            if (productDetails.type === "clothing") {
-                return new Clothing(productDetails);
-            }
-            if (productDetails.type === "appliances") {
-                return new Appliances(productDetails);
-            }
-            return new Products(productDetails);
+export function loadProductFetch() {
+    const promise = fetch("https://supersimplebackend.dev/products")
+        .then(response => {
+            return response.json();
+        })
+        .then(productsData => {
+            console.log(productsData);
+            products = productsData.map(productDetails => {
+                if (productDetails.type === "clothing") {
+                    return new Clothing(productDetails);
+                }
+                if (productDetails.type === "appliances") {
+                    return new Appliances(productDetails);
+                }
+            });
         });
-    });
     return promise;
-}*/
+}
+
+//loadProductFetch().then(() => {
+//console.log("next step");
+//});
 export function loadProducts(fun) {
     let xhr = new XMLHttpRequest();
 
@@ -78,17 +84,14 @@ export function loadProducts(fun) {
             }
             return new Products(productDetails);
         });
-        
-        
-         fun();
 
-        console.log(products);
+        fun();
+        console.log("load product");
     });
     xhr.open("GET", "https://supersimplebackend.dev/products");
     xhr.send();
 }
 
-console.log(products);
 // export const products = [
 //     {
 //         id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",

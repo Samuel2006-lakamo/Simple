@@ -8,7 +8,7 @@
 // } from "../../data/cart.js";
 import { cart } from "../../data/cart-class.js";
 // import { cart} from "../../data/cart-class.js";
-import { products, getProduct,loadProducts } from "../../data/products.js";
+import { products, getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import dayJs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import {
