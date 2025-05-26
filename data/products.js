@@ -50,7 +50,7 @@ class Appliances extends Products {
 }
 export let products = [];
 export function loadProductFetch() {
-    const promise = fetch("https://supersimplebackend.dev/products")
+    const promise = fetch("https://error.supersimplebackend.dev/products")
         .then(response => {
             return response.json();
         })
@@ -68,6 +68,9 @@ export function loadProductFetch() {
                 }
             });
             console.log(products);
+        }).catch((error) => {
+          console.error('Promise Catch:', error);
+          
         });
     return promise;
 }
@@ -91,6 +94,10 @@ export function loadProducts(fun) {
 
         fun();
         console.log("load product");
+    });
+    xhr.addEventListener("error", (error) => {
+      console.log(error);
+     console.log("Intenal error, pls try again later");
     });
     xhr.open("GET", "https://supersimplebackend.dev/products");
     xhr.send();
