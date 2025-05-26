@@ -61,9 +61,13 @@ export function loadProductFetch() {
                     return new Clothing(productDetails);
                 }
                 if (productDetails.type === "appliances") {
-                    return new Appliances(productDetails);
+                    return new Appliances(productDetails)
+                    
+                    }else{
+                      return new Products(productDetails);
                 }
             });
+            console.log(products);
         });
     return promise;
 }
